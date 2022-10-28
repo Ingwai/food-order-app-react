@@ -8,9 +8,9 @@ const Checkout = props => {
 		postal: true,
 		city: true,
 	});
-	const reg = /\d{2}-\d{3}/;
+	const regex = /\d{2}-\d{3}/;
 	const isEmpty = value => value.trim() === '';
-	const isFiveChars = value => value.length === 5 && reg;
+	const isFiveChars = value => value.trim().length === 6 && regex.test(value);
 
 	const nameInputRef = useRef();
 	const streetInputRef = useRef();
@@ -21,7 +21,7 @@ const Checkout = props => {
 		event.preventDefault();
 		const enteredName = nameInputRef.current.value; //zbieramy dane z inputa
 		const enteredStreet = streetInputRef.current.value;
-		const enteredPostal = Number(postalInputRef.current.value);
+		const enteredPostal = postalInputRef.current.value;
 		const enteredCity = cityInputRef.current.value;
 
 		const enteredNameIsValid = !isEmpty(enteredName);
@@ -68,7 +68,7 @@ const Checkout = props => {
 			<div className={postalControlClasses}>
 				<label htmlFor='postal'>Kod pocztowy</label>
 				<input type='text' id='postal' ref={postalInputRef} />
-				{!formInputsValidity.postal && <p>Proszę wpisać kod pocztowy (5 znaków bez myślnika)</p>}
+				{!formInputsValidity.postal && <p>Proszę wpisać kod pocztowy _ _ - _ _ _</p>}
 			</div>
 			<div className={cityControlClasses}>
 				<label htmlFor='city'>Miejscowość</label>

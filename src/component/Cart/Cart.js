@@ -27,12 +27,15 @@ const Cart = props => {
 
 	const submitOrderHandler = async userData => {
 		setIsSubmitting(true);
+		//moża by tu zrobić obsługę błędów na razie przyjmuję że wszsytko się odbywa bezbłędnie
 		await fetch('https://react-http-test-c2246-default-rtdb.europe-west1.firebasedatabase.app/orders.json', {
 			method: 'POST',
 			body: JSON.stringify({ user: userData, orderedItems: cartCtx.items }),
 		});
+
 		setIsSubmitting(false);
 		setDidSubmit(true);
+		cartCtx.clearCart();
 	};
 
 	const cartItems = (
@@ -75,10 +78,10 @@ const Cart = props => {
 		</>
 	);
 
-	const isSubmittingModalContent = <p>Trwa wysyłanie twojego zamówienia...</p>
+	const isSubmittingModalContent = <p>Trwa wysyłanie twojego zamówienia...</p>;
 	const didSubmitModalContent = (
 		<React.Fragment>
-			<p>Zamówienie zostało wysłane. Dziękujemy!</p>;
+			<p>Zamówienie zostało wysłane. Dziękujemy!</p>
 			<div className={classes.actions}>
 				<button className={classes.button} onClick={props.onClose}>
 					Wyjście
